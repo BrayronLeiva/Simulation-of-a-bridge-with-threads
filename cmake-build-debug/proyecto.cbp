@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="proyecto"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="proyecto">
+				<Option output="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug/proyecto" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 proyecto"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="proyecto/fast">
+				<Option output="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug/proyecto" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-unknown-linux-gnu/13.2.0/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 proyecto/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/malcolm/Escritorio/Universidad/Sistemas\ Operativos/Proyectos/Proyecto\ I/SOProject-master/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/Carnage.c">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/Carnage.h">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/Oficial_Transito.c">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/Oficial_Transito.h">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/Semaforo.c">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/Semaforo.h">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/main.c">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/malcolm/Escritorio/Universidad/Sistemas Operativos/Proyectos/Proyecto I/SOProject-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
