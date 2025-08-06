@@ -1,55 +1,61 @@
 # SimulationOfABridgeWithThreads
-# Simulación de Tráfico Vehicular en un Puente
+# Vehicle Traffic Bridge Simulation
 
-Este proyecto implementa una simulación de tráfico vehicular en un puente, explorando diferentes mecanismos de control de flujo. La base de la simulación es la representación del puente como un arreglo de mutexes, donde cada mutex gestiona el acceso a un segmento específico del puente. Se emplean mecanismos de sincronización como `pthread_cond_wait` y `pthread_cond_broadcast` para gestionar la concurrencia entre los vehículos.
+This project implements a vehicle traffic simulation on a bridge, exploring different flow control mechanisms. The simulation represents the bridge as an array of mutexes, where each mutex controls access to a specific bridge segment. It uses synchronization mechanisms like `pthread_cond_wait` and `pthread_cond_broadcast` to manage vehicle concurrency.
 
-## Funcionamiento del Puente
+# Skills
+![C](https://img.shields.io/badge/Language-C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![pthreads](https://img.shields.io/badge/Multithreading-p--threads-FF6F00?style=for-the-badge)
+![Threads](https://img.shields.io/badge/Concept-Threads-9C27B0?style=for-the-badge)
+![Deadlocks](https://img.shields.io/badge/Concept-Deadlocks-F44336?style=for-the-badge)
+![Operating Systems](https://img.shields.io/badge/Topic-Operating%20Systems-3F51B5?style=for-the-badge&logo=linux&logoColor=white)
 
-El puente está segmentado y cada segmento es protegido por un mutex individual. La lógica de acceso para los vehículos se define de la siguiente manera:
 
-* **Vehículos en sentido contrario:** Si un vehículo intenta ocupar un segmento que ya está ocupado por un vehículo que se mueve en sentido opuesto, el hilo del vehículo que espera se suspende utilizando `pthread_cond_wait`. Este hilo permanecerá en espera hasta que el segmento sea liberado y se reciba una notificación general mediante `pthread_cond_broadcast`, indicando que el camino podría estar despejado para reevaluar su avance.
-* **Vehículos en el mismo sentido:** Los vehículos que se desplazan en la misma dirección pueden ocupar múltiples segmentos del puente simultáneamente. La operación de espera (`pthread_cond_wait`) solo se activa si la siguiente posición específica en el arreglo de mutexes que el vehículo intenta ocupar ya se encuentra tomada por otro vehículo en la misma dirección. Esto permite un flujo continuo y eficiente de vehículos en una única dirección.
+## Bridge Operation
 
-## Estructura del Proyecto
+The bridge is divided into segments, each protected by an individual mutex. Vehicle access logic works as follows:
 
-El proyecto se compone de los siguientes módulos principales, cada uno implementando una estrategia de control de tráfico distinta, además de los archivos de configuración y construcción:
+* **Opposite-direction vehicles:** When a vehicle tries to enter a segment occupied by an opposite-direction vehicle, its thread waits using `pthread_cond_wait`. The thread remains suspended until the segment is freed and a general notification (`pthread_cond_broadcast`) indicates the path may be clear for reevaluation.
+* **Same-direction vehicles:** Vehicles moving in the same direction can occupy multiple bridge segments simultaneously. The wait operation (`pthread_cond_wait`) only activates if the next specific mutex array position is already taken by another same-direction vehicle, enabling efficient one-direction traffic flow.
 
-### 1. `Carnage.h` y `Carnage.c` (Modelo de Colisión Controlada)
+## Project Structure
 
-* **Descripción:** Implementa un modelo de control de tráfico diseñado para simular escenarios de alta concurrencia con una mínima priorización direccional. Sirve como un entorno para evaluar la robustez fundamental del sistema del puente.
-* **Funcionalidad Clave:**
-    * Controla el movimiento de los automóviles (`comportamiento_automovil`) a través de los segmentos del puente.
-    * Utiliza `pthread_mutex_t` y `pthread_cond_t` para la sincronización de acceso.
-    * Define parámetros como la longitud del puente (`LARGO_PUENTE`) y las velocidades vehiculares.
-    * Mantiene registros de la cantidad de vehículos en el puente y en cada dirección (`carrosEnPuente`, `carrosOaE`, `carrosEaO`).
-* **Estructuras:** `struct Automovil` (ID, sentido).
-* **Funciones:** `cargaDatos()`, `comportamiento_automovil()`.
+The project contains these main modules, each implementing different traffic control strategies, plus configuration and build files:
 
-### 2. `Semaforo.h` y `Semaforo.c` (Modelo de Semáforo)
+### 1. `Carnage.h` and `Carnage.c` (Controlled Collision Model)
 
-* **Descripción:** Implementa un sistema de control de tráfico para el puente basado en un semáforo, el cual alterna el sentido del flujo vehicular en intervalos de tiempo predefinidos.
-* **Funcionalidad Clave:**
-    * Define las duraciones para el tráfico en cada sentido (`duracionOesteEste`, `duracionEsteOeste`).
-    * Emplea múltiples mutexes y variables de condición para la sincronización del cambio de sentido y el acceso.
-    * Monitorea la cantidad de vehículos en el puente por dirección (`carrosEnPuenteSemaforo`, `carrosOaESemaforo`, `carrosEaOSemaforo`).
-* **Estructuras:** `struct AutomovilSemaforo` (ID, sentido), `struct Semaforo` (estado, sentido).
-* **Funciones:** `cargarDatosSemaforo()`, `comportamiento_semaforo()`, `comportamiento_automovil_semaforo()`.
+* **Description:** Implements a traffic control model designed for high-concurrency scenarios with minimal directional prioritization. Serves as a baseline for testing bridge system robustness.
+* **Key Features:**
+    * Controls vehicle movement (`comportamiento_automovil`) through bridge segments
+    * Uses `pthread_mutex_t` and `pthread_cond_t` for access synchronization
+    * Defines parameters like bridge length (`LARGO_PUENTE`) and vehicle speeds
+    * Tracks vehicles on bridge and per direction (`carrosEnPuente`, `carrosOaE`, `carrosEaO`)
+* **Structures:** `struct Automovil` (ID, direction)
+* **Functions:** `cargaDatos()`, `comportamiento_automovil()`
 
-### 3. `Oficial_Transito.h` y `Oficial_Transito.c` (Modelo de Oficial de Tránsito)
+### 2. `Semaforo.h` and `Semaforo.c` (Traffic Light Model)
 
-* **Descripción:** Describe un sistema de control de tráfico donde oficiales de tránsito dirigen el flujo vehicular. Este modelo incorpora una lógica de turnos más dinámica, influenciada por la cantidad de vehículos que han cruzado o que están en espera.
-* **Funcionalidad Clave:**
-    * Define la longitud del puente y las velocidades de los vehículos.
-    * Introduce los parámetros `k1` y `k2`, que controlan los umbrales para el cambio de turno.
-    * Utiliza múltiples mutexes y variables de condición para la sincronización entre vehículos y oficiales.
-    * Controla el sentido actual del tráfico (`sentidoOfi`) y los contadores de vehículos (`carrosEnPuenteOfi`, `carrosOaEOfi`, `carrosEaOOfi`, `esperando_oeste_esteOfi`, `esperando_este_oesteOfi`).
-* **Estructuras:** `struct AutomovilOfi` (ID, sentido), `struct Oficial` (estado, sentido, ID).
-* **Funciones:** `cargarDatosTrafico()`, `comportamiento_oficial_Oeste()`, `comportamiento_oficial_Este()`, `comportamiento_automovil_oficiales()`.
+* **Description:** Implements a traffic light system that alternates traffic direction at predefined intervals.
+* **Key Features:**
+    * Defines duration for each traffic direction (`duracionOesteEste`, `duracionEsteOeste`)
+    * Uses multiple mutexes and condition variables for direction switching synchronization
+    * Monitors vehicles per direction (`carrosEnPuenteSemaforo`, `carrosOaESemaforo`, `carrosEaOSemaforo`)
+* **Structures:** `struct AutomovilSemaforo` (ID, direction), `struct Semaforo` (status, direction)
+* **Functions:** `cargarDatosSemaforo()`, `comportamiento_semaforo()`, `comportamiento_automovil_semaforo()`
 
-### Archivos de Configuración y Construcción
+### 3. `Oficial_Transito.h` and `Oficial_Transito.c` (Traffic Officer Model)
 
-* **`Makefile`:** Archivo que define las reglas de compilación del proyecto. Utiliza `g++` con flags para advertencias (`-Wall`, `-Werror`), el estándar C++17 (`-std=c++17`), y la herramienta `address sanitizer` (`-fsanitize=address`) para depuración.
-* **`CMakeLists.txt`:** Script de construcción para CMake. Establece el estándar C17 y configura la compilación del ejecutable `proyecto` incluyendo todos los archivos fuente y de cabecera relevantes.
-* **`Prueba.txt`:** Archivo de texto que contiene los parámetros numéricos de entrada utilizados para configurar las diferentes simulaciones del proyecto.
+* **Description:** Implements a traffic control system where officers dynamically direct vehicle flow based on crossing/queued vehicles.
+* **Key Features:**
+    * Defines bridge length and vehicle speeds
+    * Introduces `k1` and `k2` parameters controlling direction-switching thresholds
+    * Uses multiple mutexes/condition variables for vehicle-officer synchronization
+    * Manages current traffic direction (`sentidoOfi`) and vehicle counters (`carrosEnPuenteOfi`, `carrosOaEOfi`, etc.)
+* **Structures:** `struct AutomovilOfi` (ID, direction), `struct Oficial` (status, direction, ID)
+* **Functions:** `cargarDatosTrafico()`, `comportamiento_oficial_Oeste()`, `comportamiento_oficial_Este()`, `comportamiento_automovil_oficiales()`
 
----
+### Configuration and Build Files
+
+* **`Makefile`:** Compilation rules using `g++` with warning flags (`-Wall`, `-Werror`), C++17 standard (`-std=c++17`), and address sanitizer (`-fsanitize=address`) for debugging
+* **`CMakeLists.txt`:** CMake build script setting C17 standard and configuring `proyecto` executable compilation
+* **`Prueba.txt`:** Input parameter file for simulation configuration
