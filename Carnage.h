@@ -6,6 +6,9 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <unistd.h>   // Para usleep
+#include <string.h>   // Si usas strtok
+#include <math.h>
 
 #define LARGO_PUENTE 5
 

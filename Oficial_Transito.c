@@ -145,7 +145,8 @@ void* comportamiento_automovil_oficiales(void* arg) {
             printf("Hilo %d pasando por el mutex %d\n", automovil->id, i, "\n");
 
             // Espera un momento simulando el paso por el carril
-            usleep(velocidadOesteaEsteOficiales);
+            unsigned int segundos = (unsigned int)(velocidadOesteaEsteOficiales + 0.5);
+            sleep(segundos);
             // Desbloquea el mutex anterior
             if (i > 0) {
                 pthread_mutex_unlock(&mutexesOfi[i - 1]);
@@ -163,7 +164,9 @@ void* comportamiento_automovil_oficiales(void* arg) {
             pthread_mutex_lock(&mutexesOfi[i]);
             printf("Hilo %d pasando por el mutex %d\n", automovil->id, i, "\n");
             // Espera un momento simulando el paso por el carril
-            usleep(velocidadEsteaOsteOficiales);
+            unsigned int segundos = (unsigned int)(velocidadEsteaOsteOficiales + 0.5);
+            sleep(segundos);
+            
             // Desbloquea el mutex siguiente
             if (i < LARGO_PUENTE - 1) {
                 pthread_mutex_unlock(&mutexesOfi[i + 1]);

@@ -49,9 +49,11 @@ void* comportamiento_semaforo(void* arg) {
 
         pthread_mutex_lock(&mutex3Semaforo);
         if (semafor->sentidoS=='e') {
-            usleep(duracionEsteOeste);
+            unsigned int segundos = (unsigned int)(duracionEsteOeste + 0.5);
+            sleep(segundos);
         }else {
-            usleep(duracionOesteEste);
+            unsigned int segundos = (unsigned int)(duracionOesteEste + 0.5);
+            sleep(segundos);
         }
         sentidoSemaforo = (sentidoSemaforo == 'o') ? 'e' : 'o'; // Cambiar el sentido del tráfico
         printf("\n =========================CAMBIO DE SENTIDO DE TRAFICO =========================Nuevo sentido: %c\n", sentidoSemaforo);
@@ -91,8 +93,10 @@ void* comportamiento_automovil_semaforo(void* arg) {
             pthread_mutex_lock(&mutexesSemaforo[i]);
             printf("Hilo %d pasando por el mutex %d\n", automovil->id, i, "\n");
 
-            // Espera un momento simulando el paso por el carril
-            usleep(velocidadOesteaEsteSemaforo);
+            // Espera un momento simulando el paso por el carril;
+            unsigned int segundos = (unsigned int)(velocidadOesteaEsteSemaforo + 0.5);
+            sleep(segundos);
+
             // Desbloquea el mutex anterior
             if (i > 0) {
                 pthread_mutex_unlock(&mutexesSemaforo[i - 1]);
@@ -110,7 +114,8 @@ void* comportamiento_automovil_semaforo(void* arg) {
             pthread_mutex_lock(&mutexesSemaforo[i]);
             printf("Hilo %d pasando por el mutex %d\n", automovil->id, i, "\n");
             // Espera un momento simulando el paso por el carril
-            usleep(velocidadEsteaOsteSemaforo);
+            unsigned int segundos = (unsigned int)(velocidadEsteaOsteSemaforo + 0.5);
+            sleep(segundos);
             // Desbloquea el mutex siguiente
             if (i < LARGO_PUENTE - 1) {
                 pthread_mutex_unlock(&mutexesSemaforo[i + 1]);

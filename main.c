@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <unistd.h>
 #include <math.h>
 #include <stdbool.h>
 #include "Carnage.h"
 #include "Semaforo.h"
 #include "Oficial_Transito.h"
-
-
+#include <string.h>   // Para strtok
+#include <time.h>     // Para time()
+#include <unistd.h>
 
 #define MAX_LINE_LENGTH 100 // Longitud máxima de una línea en el archivo
 
@@ -180,7 +180,8 @@ void carnage(){
         double tiempoEspera = -log(1.0 - ((double)rand() / RAND_MAX)) * mediaTiempoOE;
 
         // Esperar el tiempo calculado
-        usleep((useconds_t)tiempoEspera * 1000000);
+        unsigned int segundos = (unsigned int)(tiempoEspera + 0.5); 
+        sleep(segundos);
 
         // Crear un nuevo hilo
         pthread_t hilo;
@@ -191,6 +192,7 @@ void carnage(){
         }else {
             automovil->sentido = 'o';
         }
+
         if (pthread_create(&hilo, NULL, comportamiento_automovil, automovil) != 0) {
             perror("Error al crear el hilo");
             exit(EXIT_FAILURE);
@@ -257,7 +259,8 @@ void semaforo(){
         double tiempoEspera = -log(1.0 - ((double)rand() / RAND_MAX)) * mediaTiempoOE;
 
         // Esperar el tiempo calculado
-        usleep((useconds_t)tiempoEspera * 1000000);
+        unsigned int segundos = (unsigned int)(tiempoEspera + 0.5);
+        sleep(segundos);
 
         // Crear un nuevo hilo
         pthread_t hilo;
@@ -342,7 +345,8 @@ K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
         double tiempoEspera = -log(1.0 - ((double)rand() / RAND_MAX)) * mediaTiempoOE;
 
         // Esperar el tiempo calculado
-        usleep((useconds_t)tiempoEspera * 1000000);
+        unsigned int segundos = (unsigned int)(tiempoEspera + 0.5);
+        sleep(segundos);
 
         // Crear un nuevo hilo
         pthread_t hilo;

@@ -6,6 +6,8 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <string.h>   // Si usas strtok
+#include <math.h>
 
 #define LARGO_PUENTE 5
 #define NUM_VEHICULOS 10
