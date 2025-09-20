@@ -159,7 +159,7 @@ void carnage(){
 }
 
 void semaforo(){
-    printf("\nSE EJECUTO OFICIAL DE TRANSITO\n");
+    printf("\nSE EJECUTO SEMAFORO\n");
 
     int longitudPuente, K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior;
     double mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO;
