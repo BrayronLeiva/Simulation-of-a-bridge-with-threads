@@ -40,93 +40,48 @@ int main() {
     return 0;
 }
 
-void recuperarDatos(int* longitudPuente, double* mediaTiempoOE, double* mediaTiempoEO, double* velocidadPromedioOE, double* velocidadPromedioEO,
-    int* K1, int* K2, int* duracionSemaforoOE, int* duracionSemaforoEO, int* rangoInferior, int* rangoSuperior) {
-    FILE *file;
-    char linea[MAX_LINE_LENGTH];
-    char *token;
+void recuperarDatos(int* longitudPuente, double* mediaTiempoOE, double* mediaTiempoEO, 
+                    double* velocidadPromedioOE, double* velocidadPromedioEO,
+                    int* K1, int* K2, int* duracionSemaforoOE, int* duracionSemaforoEO, 
+                    int* rangoInferior, int* rangoSuperior) {
 
-    file = fopen("../Prueba.txt", "r");
+    FILE *file = fopen("Datos.txt", "r");
+    if (!file) { perror("Error al abrir archivo"); exit(1); }
 
-    if (file == NULL) { // Si el archivo posee errores no leera el archivo
-        perror("Error al abrir el archivo");
-        return;
-    }
+    char linea[100];
 
-    int parametro_actual = 0; // variable para controlar qué parámetro se está leyendo
+    // 1. Longitud del puente
+    fgets(linea, sizeof(linea), file);
+    *longitudPuente = atoi(linea);
 
-    // Lee el archivo línea por línea
-    while (fgets(linea, MAX_LINE_LENGTH, file) != NULL && parametro_actual < 10) {
-        // Dividir la línea en tokens usando el delimitador ","
-        token = strtok(linea, ",");
-        while (token != NULL) {
-            // Convertir el token actual a su tipo correspondiente y almacenarlo en la variable adecuada
-            switch (parametro_actual) {
-                case 0:
-                    *longitudPuente = atoi(token);
-                    break;
-                case 1:
-                    *mediaTiempoOE = atof(token);
-                    break;
-                case 2:
-                    *mediaTiempoEO = atof(token);
-                    break;
-                case 3:
-                    *velocidadPromedioOE = atof(token);
-                    break;
-                case 4:
-                    *velocidadPromedioEO = atof(token);
-                    break;
-                case 5:
-                    *K1 = atoi(token);
-                    break;
-                case 6:
-                    *K2 = atoi(token);
-                    break;
-                case 7:
-                    *duracionSemaforoOE = atoi(token);
-                    break;
-                case 8:
-                    *duracionSemaforoEO = atoi(token);
-                    break;
-                case 9:
-                    *rangoInferior = atoi(token);
-                    break;
-                case 10:
-                    *rangoSuperior = atoi(token);
-                    break;
-                default:
-                    break;
-            }
-            // Obtener el siguiente token
-            token = strtok(NULL, ",");
-            parametro_actual++;
-        }
-    }
+    // 2. Media de tiempos
+    fgets(linea, sizeof(linea), file);
+    sscanf(linea, "%lf,%lf", mediaTiempoOE, mediaTiempoEO);
 
-    // Cierra el archivo
+    // 3. Velocidades promedio
+    fgets(linea, sizeof(linea), file);
+    sscanf(linea, "%lf,%lf", velocidadPromedioOE, velocidadPromedioEO);
+
+    // 4. K1
+    fgets(linea, sizeof(linea), file);
+    *K1 = atoi(linea);
+
+    // 5. K2
+    fgets(linea, sizeof(linea), file);
+    *K2 = atoi(linea);
+
+    // 6. Duración semáforos
+    fgets(linea, sizeof(linea), file);
+    sscanf(linea, "%d,%d", duracionSemaforoOE, duracionSemaforoEO);
+
+    // 7. Rango inferior y superior
+    fgets(linea, sizeof(linea), file);
+    sscanf(linea, "%d,%d", rangoInferior, rangoSuperior);
+
     fclose(file);
 }
 
-/*void recuperarDatos(int* cantCarros){
-    FILE *file;
-    char linea[MAX_LINE_LENGTH];
-    file = fopen("../Prueba.txt", "r");
 
-    if (file == NULL) { // Si el archivo posee errores no leera el archivo
-        perror("Error al abrir el archivo");
-        return;
-    }
-
-    // Lee el archivo línea por línea
-    while (fgets(linea, MAX_LINE_LENGTH, file) != NULL) {
-        // Convertir la línea leida a un numero entero
-        *cantCarros = atoi(linea);
-    }
-
-    // Cierra el archivo
-    fclose(file);
-}*/
 void carnage(){
 
     //recuperarDatos(&cantCarros);
@@ -158,18 +113,6 @@ void carnage(){
     pthread_mutex_init(&mutex, NULL);
     pthread_mutex_init(&mutex2, NULL);
 
-    // Crea los hilos
-    //for (int i = 0; i < cantCarros; i++) {
-        //thread_ids[i] = i + 1;
-        //struct Automovil *automovil = malloc(sizeof(automovil));
-        //automovil->id = i + 1;
-        //if(rand() % 2 == 0) {
-            //automovil->sentido = 'e';
-        //}else {
-            //automovil->sentido = 'o';
-        //}
-        //pthread_create(&threads[i], NULL, comportamiento_automovil, automovil);
-    //}
 
     srand(time(NULL));
 
@@ -185,10 +128,12 @@ void carnage(){
 
         // Crear un nuevo hilo
         pthread_t hilo;
-        struct Automovil *automovil = malloc(sizeof(automovil));
+        struct Automovil *automovil = malloc(sizeof(struct Automovil));
         automovil->id = i + 1;
+
+        //Asignacion aleatoria de sentido
         if(rand() % 2 == 0) {
-        automovil->sentido = 'e';
+            automovil->sentido = 'e';
         }else {
             automovil->sentido = 'o';
         }
@@ -197,6 +142,12 @@ void carnage(){
             perror("Error al crear el hilo");
             exit(EXIT_FAILURE);
         }
+        //Si pasa el puento lo liberamos
+        //printf("\nSe va a borrar el hilo %d\n", automovil->id);
+        pthread_detach(hilo);
+        free(automovil);
+
+
         i++;
     }
 
@@ -206,6 +157,7 @@ void carnage(){
         pthread_mutex_destroy(&mutexes[i]);
     }
 }
+
 void semaforo(){
     printf("\nSE EJECUTO OFICIAL DE TRANSITO\n");
 
@@ -240,9 +192,10 @@ void semaforo(){
 
     pthread_t semaforoOeste;
     pthread_t semaforoEste;
+
     struct Semaforo *semaforoE = malloc(sizeof(semaforoE));
     semaforoE->sentidoS = 'e';
-    //semaforoE->sentidoS = 'e';
+
 
     struct Semaforo *semaforoO = malloc(sizeof(semaforoO));
     semaforoO->sentidoS = 'o';
@@ -264,10 +217,11 @@ void semaforo(){
 
         // Crear un nuevo hilo
         pthread_t hilo;
-        struct AutomovilSemaforo *automovil = malloc(sizeof(automovil));
+        struct AutomovilSemaforo *automovil = malloc(sizeof(struct AutomovilSemaforo));
         automovil->id = e + 1;
+
         if(rand() % 2 == 0) {
-        automovil->sentido = 'e';
+            automovil->sentido = 'e';
         }else {
             automovil->sentido = 'o';
         }
@@ -275,12 +229,17 @@ void semaforo(){
             perror("Error al crear el hilo");
             exit(EXIT_FAILURE);
         }
+
+        pthread_detach(hilo);
+        free(automovil);
+
         e++;
     }
 
 
     pthread_join(semaforoOeste, NULL);
     pthread_join(semaforoEste, NULL);
+
     // Destruye los mutexes
     for (int i = 0; i < LARGO_PUENTE; i++) {
         pthread_mutex_destroy(&mutexes[i]);
@@ -311,6 +270,7 @@ void oficialTransito(){
     printf("Rango superior de velocidades de un grupo de carros: %d\n", rangoSuperior);
     cargarDatosTrafico(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO,
 K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
+
     // Inicializa los mutexes
     for (int i = 0; i < LARGO_PUENTE; i++) {
         pthread_mutex_init(&mutexesOfi[i], NULL);
@@ -322,10 +282,10 @@ K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
 
     pthread_t oficialOeste;
     pthread_t oficialEste;
+
     struct Oficial *oficialE = malloc(sizeof(oficialE));
     oficialE->sentidoS = 'e';
     oficialE->id = 1;
-    //semaforoE->sentidoS = 'e';
 
     struct Oficial *oficialO = malloc(sizeof(oficialO));
     oficialO->id = 0;
@@ -339,8 +299,8 @@ K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
     int tipo;
     int j = 0;
     while (1) {
+        
         // Calcular el tiempo de espera entre la creación de hilos
-        // Semilla para la generación de números aleatorios
         srand(time(NULL));
         double tiempoEspera = -log(1.0 - ((double)rand() / RAND_MAX)) * mediaTiempoOE;
 
@@ -350,7 +310,7 @@ K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
 
         // Crear un nuevo hilo
         pthread_t hilo;
-        struct AutomovilOfi *automovil = malloc(sizeof(automovil));
+        struct AutomovilOfi *automovil = malloc(sizeof(struct AutomovilOfi));
         automovil->id = j + 1;
 
         srand(time(NULL));
@@ -366,6 +326,9 @@ K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
             perror("Error al crear el hilo");
             exit(EXIT_FAILURE);
         }
+
+        pthread_detach(hilo);
+        free(automovil);
 
         j++;
     }
