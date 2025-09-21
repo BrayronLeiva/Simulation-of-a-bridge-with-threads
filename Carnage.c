@@ -31,7 +31,7 @@ void* comportamiento_automovil(void* arg) {
     while (carrosEnPuente > 0 && (automovil->sentido == 'o' && carrosOaE == 0 && carrosEaO >= 1) ||
     carrosEnPuente > 0 && (automovil->sentido == 'e' && carrosEaO == 0 && carrosOaE >= 1)) {
         // Esperar a que el puente esté disponible o haya espacio en el sentido adecuado
-        printf("\nCarros en puente %d\n", carrosEnPuente);
+        //printf("\nCarros en puente %d\n", carrosEnPuente);
         pthread_cond_wait(&cond_cruzar, &mutex);
     }
 
@@ -94,7 +94,7 @@ void* comportamiento_automovil(void* arg) {
     pthread_mutex_unlock(&mutex2);
 
     //Si pasa el puento lo liberamos
-    printf("\nEl hilo %d ha cruzado el puente\n", automovil->id);
+    //printf("\nEl hilo %d ha cruzado el puente\n", automovil->id);
     free(automovil);
     return NULL;
 }

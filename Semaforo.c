@@ -33,11 +33,6 @@ void cargarDatosSemaforo(int longitudPuente, double mediaTiempoOE, double mediaT
     duracionOesteEste = duracionSemaforoOE;
     duracionEsteOeste = duracionSemaforoEO;
 
-    printf("la velocidad promedio de oeste a este es: %d\n", velocidadOesteaEsteSemaforo);
-    printf("la velocidad promedio de oeste a este es: %d\n", velocidadEsteaOsteSemaforo);
-    printf("la duracion del semaforo de oeste a este es%d\n:", duracionSemaforoOE);
-    printf("la duracion del semaforo de este a oeste es%d\n:", duracionSemaforoEO);
-
 
 }
 
@@ -58,9 +53,12 @@ void* comportamiento_semaforo(void* arg) {
         sentidoSemaforo = (sentidoSemaforo == 'o') ? 'e' : 'o'; // Cambiar el sentido del tráfico
         printf("\n =========================CAMBIO DE SENTIDO DE TRAFICO =========================\n");
         if(sentidoSemaforo=='o'){
-            printf("El semaforo esta en verde para el sentido de oeste a este\n");
+            printf("--El semaforo esta en verde para el sentido de oeste a este--\n");
         }else{
-            printf("El semaforo esta en verde para el sentido de este a oeste\n");
+            printf("--El semaforo esta en verde para el sentido de este a oeste--\n");
+        }
+        if(carrosEnPuenteSemaforo>0){
+            printf("--Hay %d carros en el puente, se esperara a que crucen\n--", carrosEnPuenteSemaforo);
         }
 
         pthread_cond_broadcast(&cond_cruzarSemaforo); // Permitir que todos los automóviles esperando cambien de sentido
@@ -81,7 +79,7 @@ void* comportamiento_automovil_semaforo(void* arg) {
     //|| automovil->estado=='o'&& carrosOaE>1 && carrosEaO==0 || automovil->estado =='e'&& carrosEaO>1 && carrosOaE==0
     while ( (automovil->sentido == 'o' && (sentidoSemaforo=='e' || carrosEaOSemaforo>=1) ) || (automovil->sentido == 'e' && (sentidoSemaforo=='o' || carrosOaESemaforo>=1) )) {
         // Esperar a que el puente esté disponible o haya espacio en el sentido adecuado
-        printf("\nCarros en puente %d\n", carrosEnPuenteSemaforo);
+        //printf("\nCarros en puente %d\n", carrosEnPuenteSemaforo);
         pthread_cond_wait(&cond_cruzarSemaforo, &mutexSemaforo);
     }
 

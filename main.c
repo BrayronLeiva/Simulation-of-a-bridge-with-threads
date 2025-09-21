@@ -320,7 +320,7 @@ void oficialTransito(){
         }
 
         pthread_detach(hilo);
-        free(automovil); 
+        
 
         j++;
     }
