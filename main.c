@@ -81,15 +81,10 @@ void recuperarDatos(int* longitudPuente, double* mediaTiempoOE, double* mediaTie
     fclose(file);
 }
 
-
-void carnage(){
-
-    //recuperarDatos(&cantCarros);
-    int longitudPuente, K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior;
-    double mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO;
-
-    recuperarDatos(&longitudPuente, &mediaTiempoOE, &mediaTiempoEO, &velocidadPromedioOE, &velocidadPromedioEO, &K1, &K2, &duracionSemaforoOE, &duracionSemaforoEO, &rangoInferior, &rangoSuperior);
-
+void imprimir_informacion(int longitudPuente, double mediaTiempoOE, double mediaTiempoEO, 
+                    double velocidadPromedioOE, double velocidadPromedioEO,
+                    int K1, int K2, int duracionSemaforoOE, int duracionSemaforoEO, 
+                    int rangoInferior, int rangoSuperior) {
     printf("Longitud del puente: %d\n", longitudPuente);
     printf("Media de tiempo entre llegadas de hilos (Oeste a Este): %.2f\n", mediaTiempoOE);
     printf("Media de tiempo entre llegadas de hilos (Este a Oeste): %.2f\n", mediaTiempoEO);
@@ -101,6 +96,18 @@ void carnage(){
     printf("Tiempo de duracion de la luz verde de un semaforo (Este a Oeste): %d\n", duracionSemaforoEO);
     printf("Rango inferior de velocidades de un grupo de carros: %d\n", rangoInferior);
     printf("Rango superior de velocidades de un grupo de carros: %d\n", rangoSuperior);
+}
+
+
+void carnage(){
+
+    //recuperarDatos(&cantCarros);
+    int longitudPuente, K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior;
+    double mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO;
+
+    recuperarDatos(&longitudPuente, &mediaTiempoOE, &mediaTiempoEO, &velocidadPromedioOE, &velocidadPromedioEO, &K1, &K2, &duracionSemaforoOE, &duracionSemaforoEO, &rangoInferior, &rangoSuperior);
+
+    imprimir_informacion(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO, K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
 
     cargaDatos(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO,
     K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
@@ -166,18 +173,9 @@ void semaforo(){
 
     recuperarDatos(&longitudPuente, &mediaTiempoOE, &mediaTiempoEO, &velocidadPromedioOE, &velocidadPromedioEO,
         &K1, &K2, &duracionSemaforoOE, &duracionSemaforoEO, &rangoInferior, &rangoSuperior);
+    
+    imprimir_informacion(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO, K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
 
-    printf("Longitud del puente: %d\n", longitudPuente);
-    printf("Media de tiempo entre llegadas de hilos (Oeste a Este): %.2f\n", mediaTiempoOE);
-    printf("Media de tiempo entre llegadas de hilos (Este a Oeste): %.2f\n", mediaTiempoEO);
-    printf("Velocidad promedio de los automoviles (Oeste a Este): %.2f\n", velocidadPromedioOE);
-    printf("Velocidad promedio de los automoviles (Este a Oeste): %.2f\n", velocidadPromedioEO);
-    printf("Valor para K1: %d\n", K1);
-    printf("Valor para K2: %d\n", K2);
-    printf("Tiempo de duracion de la luz verde de un semaforo (Oeste a Este): %d\n", duracionSemaforoOE);
-    printf("Tiempo de duracion de la luz verde de un semaforo (Este a Oeste): %d\n", duracionSemaforoEO);
-    printf("Rango inferior de velocidades de un grupo de carros: %d\n", rangoInferior);
-    printf("Rango superior de velocidades de un grupo de carros: %d\n", rangoSuperior);
 
     cargarDatosSemaforo(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO,
     K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
@@ -257,19 +255,11 @@ void oficialTransito(){
     recuperarDatos(&longitudPuente, &mediaTiempoOE, &mediaTiempoEO, &velocidadPromedioOE, &velocidadPromedioEO, &K1, &K2,
         &duracionSemaforoOE, &duracionSemaforoEO, &rangoInferior, &rangoSuperior);
 
-    printf("Longitud del puente: %d\n", longitudPuente);
-    printf("Media de tiempo entre llegadas de hilos (Oeste a Este): %.2f\n", mediaTiempoOE);
-    printf("Media de tiempo entre llegadas de hilos (Este a Oeste): %.2f\n", mediaTiempoEO);
-    printf("Velocidad promedio de los automoviles (Oeste a Este): %.2f\n", velocidadPromedioOE);
-    printf("Velocidad promedio de los automoviles (Este a Oeste): %.2f\n", velocidadPromedioEO);
-    printf("Valor para K1: %d\n", K1);
-    printf("Valor para K2: %d\n", K2);
-    printf("Tiempo de duracion de la luz verde de un semaforo (Oeste a Este): %d\n", duracionSemaforoOE);
-    printf("Tiempo de duracion de la luz verde de un semaforo (Este a Oeste): %d\n", duracionSemaforoEO);
-    printf("Rango inferior de velocidades de un grupo de carros: %d\n", rangoInferior);
-    printf("Rango superior de velocidades de un grupo de carros: %d\n", rangoSuperior);
+    
+    imprimir_informacion(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO, K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
+
     cargarDatosTrafico(longitudPuente, mediaTiempoOE, mediaTiempoEO, velocidadPromedioOE, velocidadPromedioEO,
-K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
+    K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
 
     // Inicializa los mutexes
     for (int i = 0; i < LARGO_PUENTE; i++) {
@@ -329,6 +319,7 @@ K1, K2, duracionSemaforoOE, duracionSemaforoEO, rangoInferior, rangoSuperior);
 
         pthread_detach(hilo);
         free(automovil);
+
 
         j++;
     }
