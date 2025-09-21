@@ -238,6 +238,9 @@ void semaforo(){
     pthread_join(semaforoOeste, NULL);
     pthread_join(semaforoEste, NULL);
 
+    free(semaforoE);
+    free(semaforoO);
+
     // Destruye los mutexes
     for (int i = 0; i < LARGO_PUENTE; i++) {
         pthread_mutex_destroy(&mutexes[i]);
@@ -318,8 +321,7 @@ void oficialTransito(){
         }
 
         pthread_detach(hilo);
-        free(automovil);
-
+        free(automovil); 
 
         j++;
     }
@@ -328,6 +330,9 @@ void oficialTransito(){
 
     pthread_join(oficialOeste, NULL);
     pthread_join(oficialEste, NULL);
+    
+    free(oficialE);
+    free(oficialO);
 
     // Destruye los mutexes
     for (int i = 0; i < LARGO_PUENTE; i++) {
