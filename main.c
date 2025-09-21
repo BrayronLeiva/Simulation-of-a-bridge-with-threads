@@ -138,6 +138,8 @@ void carnage(){
         struct Automovil *automovil = malloc(sizeof(struct Automovil));
         automovil->id = i + 1;
 
+        printf("\nSe creo el hilo %d\n", automovil->id);
+
         //Asignacion aleatoria de sentido
         if(rand() % 2 == 0) {
             automovil->sentido = 'e';
@@ -149,10 +151,9 @@ void carnage(){
             perror("Error al crear el hilo");
             exit(EXIT_FAILURE);
         }
-        //Si pasa el puento lo liberamos
-        //printf("\nSe va a borrar el hilo %d\n", automovil->id);
+        
+        //El hilo se libera automaticamente al terminar
         pthread_detach(hilo);
-        free(automovil);
 
 
         i++;
@@ -247,8 +248,6 @@ void semaforo(){
     }
 }
 void oficialTransito(){
-    //pthread_t threads[NUM_VEHICULOS];
-    //int thread_ids[NUM_VEHICULOS];
 
     printf("\nSE EJECUTO OFICIAL DE TRANSITO\n");
 
@@ -307,7 +306,7 @@ void oficialTransito(){
         automovil->id = j + 1;
 
         srand(time(NULL));
-        // Generar un número aleatorio entre 0 y 1 y asignarlo a 'tipo'
+        
         tipo = rand() % 2;
         if(tipo==1) {
             automovil->sentido='o';
