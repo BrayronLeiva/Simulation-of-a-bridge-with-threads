@@ -56,7 +56,12 @@ void* comportamiento_semaforo(void* arg) {
             sleep(segundos);
         }
         sentidoSemaforo = (sentidoSemaforo == 'o') ? 'e' : 'o'; // Cambiar el sentido del tráfico
-        printf("\n =========================CAMBIO DE SENTIDO DE TRAFICO =========================Nuevo sentido: %c\n", sentidoSemaforo);
+        printf("\n =========================CAMBIO DE SENTIDO DE TRAFICO =========================\n");
+        if(sentidoSemaforo=='o'){
+            printf("El semaforo esta en verde para el sentido de oeste a este\n");
+        }else{
+            printf("El semaforo esta en verde para el sentido de este a oeste\n");
+        }
 
         pthread_cond_broadcast(&cond_cruzarSemaforo); // Permitir que todos los automóviles esperando cambien de sentido
 
@@ -76,7 +81,7 @@ void* comportamiento_automovil_semaforo(void* arg) {
     //|| automovil->estado=='o'&& carrosOaE>1 && carrosEaO==0 || automovil->estado =='e'&& carrosEaO>1 && carrosOaE==0
     while ( (automovil->sentido == 'o' && (sentidoSemaforo=='e' || carrosEaOSemaforo>=1) ) || (automovil->sentido == 'e' && (sentidoSemaforo=='o' || carrosOaESemaforo>=1) )) {
         // Esperar a que el puente esté disponible o haya espacio en el sentido adecuado
-        //printf("Carros en puente %d", carrosEnPuente);
+        printf("\nCarros en puente %d\n", carrosEnPuenteSemaforo);
         pthread_cond_wait(&cond_cruzarSemaforo, &mutexSemaforo);
     }
 
@@ -127,11 +132,9 @@ void* comportamiento_automovil_semaforo(void* arg) {
     }
 
 
-
-
-    printf("2: carros en puente: %d, ID del carro: %d\n \n", carrosEnPuenteSemaforo, automovil->id );
-    printf("2: carros en puente de este a oeste: %d , ID del carro: %d\n\n", carrosEaOSemaforo, automovil->id );
-    printf("2: carros en puente de oeste a este: %d, ID del carro: %d\n\n", carrosOaESemaforo, automovil->id );
+    //printf("2: carros en puente: %d, ID del carro: %d\n \n", carrosEnPuenteSemaforo, automovil->id );
+    //printf("2: carros en puente de este a oeste: %d , ID del carro: %d\n\n", carrosEaOSemaforo, automovil->id );
+    //printf("2: carros en puente de oeste a este: %d, ID del carro: %d\n\n", carrosOaESemaforo, automovil->id );
 
     pthread_mutex_lock(&mutex2Semaforo);
     carrosEnPuenteSemaforo--;
@@ -140,5 +143,6 @@ void* comportamiento_automovil_semaforo(void* arg) {
     //pthread_cond_signal(&cond_cruzar); // Señalar a otros automóviles que puedan cruzar
     pthread_mutex_unlock(&mutex2Semaforo);
 
+    free(automovil);
     return NULL;
 }

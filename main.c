@@ -230,7 +230,7 @@ void semaforo(){
         }
 
         pthread_detach(hilo);
-        free(automovil);
+        
 
         e++;
     }
