@@ -1,5 +1,4 @@
-# SimulationOfABridgeWithThreads
-# Vehicle Traffic Bridge Simulation
+# Simulation Of A Bridge With Threads
 
 This project implements a vehicle traffic simulation on a bridge, exploring different flow control mechanisms. The simulation represents the bridge as an array of mutexes, where each mutex controls access to a specific bridge segment. It uses synchronization mechanisms like `pthread_cond_wait` and `pthread_cond_broadcast` to manage vehicle concurrency.
 
